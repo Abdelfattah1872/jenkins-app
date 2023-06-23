@@ -1,36 +1,23 @@
+@Library('Sprints-Lib') _
+
 pipeline {
-     agent any
-    parameters {
-        booleanParam(name:'project', defaultValue: true, description:'this parameter help you to know project name')
-        choice(name: 'namespace', choices:['dev','prod','stage'], description: '' ) 
-    }
+    agent any
 
     stages {
-        stage('check') {
+        stage('Build') {
             steps {
-                echo "checking your code"
-                echo "${params.namespace}"
-               
+        	buildImage()
             }
         }
-
-        stage('test') {
-            when {
-                expression{
-                    params.project == true 
-                }
-            }
+        stage('Push') {
             steps {
-                echo "testing your app" 
+	        pushImage()
             }
         }
-        
-        stage('deployment') {  
+	stage('CleanUp') {
             steps {
-                echo "Your code is deployed right now"
-                echo "this build number $BUILD_NUMBER"
+	        cleanUp()
             }
-        }    
+        }
     }
-
 }
