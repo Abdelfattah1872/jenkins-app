@@ -1,10 +1,7 @@
-FROM jenkins/jenkins:lts
-USER root
-RUN apt-get update -y
-RUN apt-get install apt-transport-https curl gnupg-agent ca-certificates software-properties-common -y
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" -y
-RUN apt-get update -y
-RUN apt-get install docker-ce docker-ce-cli containerd.io -y
+FROM python:3.7-slim
 
-RUN usermod -aG docker jenkins
+WORKDIR /app
+
+ADD . /app
+
+CMD ["python", "app.py"]
