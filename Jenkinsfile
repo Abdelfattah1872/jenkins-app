@@ -11,19 +11,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "${D} build -t islamdevops/simple-docker:${BRANCH_NAME} ."
+                sh "${D} build -t abdelfattah187/app:${BRANCH_NAME} ."
                 echo "Build for environment ${params.ENVIRONMENT} is successful"
             }
         }
 	 stage('Test') {
             steps {
-		sh "${D} run -d --name python-${BRANCH_NAME} islamdevops/simple-docker:${BRANCH_NAME}"
+		sh "${D} run -d --name python-${BRANCH_NAME} abdelfattah187/app:${BRANCH_NAME}"
 		echo "Test for environment ${params.ENVIRONMENT} is successful"
             }
         }
         stage('Deploy') {
             steps {
-	        sh "${D} push islamdevops/simple-docker:${BRANCH_NAME}"
+	        sh "${D} push abdelfattah187/app:${BRANCH_NAME}"
 		echo "Deployment for environment ${params.ENVIRONMENT} is successful"
             }
         }
