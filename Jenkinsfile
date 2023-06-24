@@ -10,7 +10,9 @@ pipeline {
 
     stages {
         stage('Build') {
+            
             steps {
+		    
                 echo "Build for environment ${params.ENVIRONMENT} is successful"
             }
         }
