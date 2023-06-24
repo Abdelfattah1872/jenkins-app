@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent AWS-ins
     environment {
         D = 'docker'
     }
