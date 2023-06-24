@@ -3,7 +3,11 @@ pipeline {
     environment {
         D = 'docker'
     }
-
+    parameters {
+        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Environment to deploy')
+        booleanParam(name: 'CLEAN_BUILD', defaultValue: true, description: 'Perform a clean build')
+    }
+	
     stages {
         stage('Build') {
             steps {
