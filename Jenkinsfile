@@ -1,5 +1,5 @@
 pipeline {
-    agent 'label {AWS-ins'}
+    agent {label 'AWS-ins'}
     environment {
         D = 'docker'
     }
