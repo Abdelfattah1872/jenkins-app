@@ -1,22 +1,33 @@
-@Library('Sprints-Lib') _
-
 pipeline {
     agent any
+    environment {
+        D = 'docker'
+    }
 
     stages {
         stage('Build') {
             steps {
-        	buildImage()
+                sh "${D} build -t abdelfattah187/app:${BRANCH_NAME} ."
+                echo "Build for environment ${params.ENVIRONMENT} is successful"
             }
         }
-        stage('Push') {
+	 stage('Test') {
             steps {
-	        pushImage()
+		sh "${D} run -d --name python-${BRANCH_NAME} abdelfattah187/app:${BRANCH_NAME}"
+		echo "Test for environment ${params.ENVIRONMENT} is successful"
             }
         }
-	stage('CleanUp') {
+        stage('Deploy') {
             steps {
-	        cleanUp()
+	        sh "${D} push abdelfattah187/app:${BRANCH_NAME}"
+		echo "Deployment for environment ${params.ENVIRONMENT} is successful"
+            }
+        }
+	stage('Cleanup') {
+            steps {
+		sh "${D} stop python-${BRANCH_NAME}"
+		sh "${D} rm python-${BRANCH_NAME}"
+		echo "Cleanup for environment ${params.ENVIRONMENT} is successful"
             }
         }
     }
